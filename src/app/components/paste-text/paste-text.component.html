@@ -1,0 +1,14 @@
+<div class="col-8 offset-2 user-input">
+  <div class="row">
+    <div class="col-6">
+      <app-user-name></app-user-name>
+    </div>
+    <div class="col-6">
+      <app-code-language [selectedLang]="pasteText.language"></app-code-language>
+    </div>
+  </div>
+</div>
+
+<div class="col-10 offset-1">
+  <app-text-input [pasteText]="pasteText"></app-text-input>
+</div>

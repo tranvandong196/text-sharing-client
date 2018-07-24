@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { UserNameComponent } from './user-name/user-name.component';
-import { CodeLanguageComponent } from './code-language/code-language.component';
-import { TextInputComponent } from './text-input/text-input.component';
+import { HeaderComponent } from './components/header/header.component';
+import { UserNameComponent } from './components/user-name/user-name.component';
+import { CodeLanguageComponent } from './components/code-language/code-language.component';
+import { TextInputComponent } from './components/text-input/text-input.component';
+import { PasteTextComponent } from './components/paste-text/paste-text.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { TextInputComponent } from './text-input/text-input.component';
     HeaderComponent,
     UserNameComponent,
     CodeLanguageComponent,
-    TextInputComponent
+    TextInputComponent,
+    PasteTextComponent
   ],
   imports: [
     BrowserModule

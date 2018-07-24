@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {PasteText} from '../../models/paste-text.model';
 
 @Component({
   selector: 'app-text-input',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./text-input.component.css']
 })
 export class TextInputComponent implements OnInit {
+
+  @Input() pasteText: PasteText;
 
   constructor() { }
 
