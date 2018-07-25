@@ -1,14 +1,39 @@
-<div class="col-8 offset-2 user-input">
-  <div class="row">
-    <div class="col-6">
-      <app-user-name></app-user-name>
-    </div>
-    <div class="col-6">
-      <app-code-language [selectedLang]="pasteText.language"></app-code-language>
-    </div>
-  </div>
+<div [hidden]="!isSubmited" class="col-10 offset-1 paste-text-formatted">
+    <textarea class="form-control text-input" aria-label="With textarea"
+    >{{pasteText.content}}</textarea>
 </div>
 
-<div class="col-10 offset-1">
-  <app-text-input [pasteText]="pasteText"></app-text-input>
-</div>
+<form [formGroup]="formdata" (ngSubmit)="onClickSubmit()">
+  <div class="col-8 offset-2 user-input">
+    <div class="row">
+      <div class="col-6">
+          <div class="input-group mb-3" [class]="username.hasError('required') && username.dirty ? 'username-invalid input-group mb-3':'input-group mb-3'">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Your Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="username">
+          </div>
+
+      </div>
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Code language</span>
+          </div>
+          <select class="custom-select" [(ngModel)]="pasteText.language" [ngModelOptions]="{standalone: true}" (change)="onChangeLanguage(langs.value)" #langs>
+            <option *ngFor="let language of languages" [value]="language.id">{{language.name}}</option>
+          </select>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-10 offset-1">
+    <textarea aria-label="With textarea"
+              [class]="textInput.hasError('required') && textInput.dirty ? 'username-invalid form-control text-input':'form-control text-input'"
+              formControlName="textInput"
+    >{{pasteText.content}}</textarea>
+    <button [disabled]="formdata.invalid" type="submit" class="btn btn-success paste-code-btn">Paste code</button>
+  </div>
+</form>

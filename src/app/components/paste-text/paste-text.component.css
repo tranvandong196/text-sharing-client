@@ -1,3 +1,19 @@
 .user-input {
   margin-top: 20px;
 }
+
+.paste-code-btn {
+  margin-top: 20px;
+}
+
+.username-invalid {
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.text-input {
+  min-height: 300px;
+}
+.paste-text-formatted {
+  margin-top: 20px;
+}

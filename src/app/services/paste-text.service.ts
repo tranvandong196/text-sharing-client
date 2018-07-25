@@ -15,13 +15,12 @@ export class PasteTextService {
       id: 1,
       hash: 'ylxYos4',
       content: 'Hello world!',
-      language: 0,
+      language: 1,
       child: null,
       parent: null,
       createByGuest: 'Tran Dong',
       createByUser: null,
       createByTime: '2018-07-24 07:30:00'
-
     };
 
     return pasteText;
