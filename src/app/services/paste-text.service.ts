@@ -1,24 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { environment } from '../../environments/environment';
 
 import { PasteText } from '../models/paste-text.model';
-import { Language} from '../models/language.model';
+import { Language } from '../models/language.model';
 
-const contentMarkdown = 'Colons can be used to align columns.\n' +
-  '\n' +
-  '| Tables        | Are           | Cool  |\n' +
-  '| ------------- |:-------------:| -----:|\n' +
-  '| col 3 is      | right-aligned | $1600 |\n' +
-  '| col 2 is      | centered      |   $12 |\n' +
-  '| zebra stripes | are neat      |    $1 |\n' +
-  '\n' +
-  'There must be at least 3 dashes separating each header cell.\n' +
-  'The outer pipes (|) are optional, and you don\'t need to make the \n' +
-  'raw Markdown line up prettily. You can also use inline Markdown.\n' +
-  '\n' +
-  'Markdown | Less | Pretty\n' +
-  '--- | --- | ---\n' +
-  '*Still* | `renders` | **nicely**\n' +
-  '1 | 2 | 3';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -26,26 +19,47 @@ const contentMarkdown = 'Colons can be used to align columns.\n' +
 
 export class PasteTextService {
 
-  constructor() { }
+  private pasteTextUrl = 'api/pasteText';  // URL to web api
+  private langugesUrl = 'api/languages';  // URL to web api
+  private apiUrl = environment.API_URL;
 
-  getPasteText(): PasteText {
-    const pasteText: PasteText = {
-      id: 1,
-      hash: 'ylxYos4',
-      content: contentMarkdown,
-      language: 1,
-      child: null,
-      parent: null,
-      createByGuest: 'Tran Dong',
-      createByUser: null,
-      createByTime: '2018-07-24 07:30:00'
-    };
+  constructor(private http: HttpClient) { }
 
-    return pasteText;
+  getPasteText(hash: string = ''): Observable<PasteText> {
+    return this.http.get<PasteText>(this.pasteTextUrl + '/' + hash)
+      .pipe(
+        tap(pasteText => console.log('fetched pasteText')),
+        catchError(this.handleError('pasteText', []))
+      );
   }
 
-  getLanguages() {
-    const languages: Language[] = [ {id: 0, name: 'Javascript'}, {id: 1, name: 'C++'} ];
-    return languages;
+  getLanguages(): Observable<Language[]> {
+    return this.http.get<Language[]>(this.langugesUrl)
+      .pipe(
+        tap(languages => console.log('fetched languages')),
+        catchError(this.handleError('languages', []))
+      );
+  }
+
+  /** POST: add a new pasteText to the server */
+  addPasteText (pasteText: PasteText): Observable<PasteText> {
+    return this.http.post<PasteText>(this.apiUrl, pasteText, httpOptions).pipe(
+      tap((pasteText: PasteText) => console.log(`added pasteText w/ id=${pasteText.hash}`)),
+      catchError(this.handleError<PasteText>('addPasteText'))
+    );
+  }
+
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }

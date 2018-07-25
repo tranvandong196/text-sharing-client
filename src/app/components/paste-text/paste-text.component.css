@@ -12,8 +12,76 @@
 }
 
 .text-input {
-  min-height: 300px;
+  min-height: 450px;
 }
+
+.text-info {
+  display: flex; justify-content: flex-end
+}
+
+.text-info > .progress > .progress-bar {
+  margin-left: auto !important;
+  width: 100% !important;
+}
+
+.text-info > .user,
+.text-info > .language{
+  height: 22px;
+  min-width: 210px;
+}
+
+.text-info > .user > .user-title {
+  width: 20px;
+}
+
+.text-info > .language > .code-language-title {
+  width: 10px;
+}
+
+.text-info > .progress > .progress-bar {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
 .paste-text-formatted {
   margin-top: 20px;
+}
+
+.list-actions {
+  /*border: 2px solid darkblue;*/
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+.list-actions > .plain-view {
+  flex-shrink: 0;
+  flex-basis: 110px;
+}
+
+.list-actions > .edit-text {
+  flex-shrink: 0;
+  flex-basis: 110px;
+}
+
+.list-actions > .plain-view > button,
+.list-actions > .edit-text > button {
+  width: 100px;
+}
+
+.list-actions > .copy-link {
+  margin-left: auto;
+  flex-basis: 400px;
+  align-self: flex-end;
+}
+
+.history-text {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.history-text > button {
+
+  width: 100px;
 }

@@ -1,6 +1,5 @@
 
 export class PasteText {
-
   constructor(
     public id: number,
     public hash: string,

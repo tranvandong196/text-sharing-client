@@ -1,19 +1,54 @@
-<div [hidden]="!isSubmited" class="col-10 offset-1 paste-text-formatted">
-  <div class="form-control text-input">
+<div *ngIf="languages && pasteText" [hidden]="!isSubmited" class="col-10 offset-1 paste-text-formatted">
+
+  <div class="list-actions mb-4 ">
+    <div class="plain-view">
+      <button type="button" class="btn btn-outline-dark">Plain view</button>
+    </div>
+    <div class="edit-text">
+      <button type="button" class="btn btn-outline-dark" (click)="editText()">Edit text</button>
+    </div>
+    <div class="input-group copy-link">
+      <input type="text" class="form-control" [value]="pasteTextUrl">
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="button" (click)="handleCopy()">Copy link</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="form-control text-input" >
+    <div class="row text-info">
+      <div class="progress mr-3 user">
+        <div class="progress-bar bg-info user-title">Create by user</div>
+        <div class="progress-bar bg-dark username">{{pasteText.createByGuest}}</div>
+      </div>
+      <div class="progress mr-3 language">
+        <div class="progress-bar bg-success code-language-title">Code language</div>
+        <div class="progress-bar bg-dark code-language-name" >{{languages[pasteText.language].name}}
+        </div>
+      </div>
+    </div>
     <markdown [data]="pasteText.content"></markdown>
   </div>
+
+  <div class="btn-group btn-group-sm mt-3 mb-3 history-text" role="group">
+    <button type="button" class="btn btn-outline-dark btn-sm">Parent</button>
+    <button type="button" class="btn btn-outline-dark btn-sm">Children</button>
+  </div>
+
 </div>
 
-<form [formGroup]="formdata" (ngSubmit)="onClickSubmit()">
+<form *ngIf="languages && pasteText" [hidden]="isSubmited" [formGroup]="formdata" (ngSubmit)="onClickSubmit()">
   <div class="col-8 offset-2 user-input">
     <div class="row">
       <div class="col-6">
-          <div class="input-group mb-3" [class]="username.hasError('required') && username.dirty ? 'username-invalid input-group mb-3':'input-group mb-3'">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Your Name</span>
-            </div>
-            <input type="text" class="form-control" formControlName="username">
+        <div class="input-group mb-3"
+             [class]="username.hasError('required') && username.dirty ? 'username-invalid input-group mb-3':'input-group mb-3'">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Your Name</span>
           </div>
+          <input type="text" class="form-control" formControlName="username">
+        </div>
 
       </div>
       <div class="col-6">
@@ -21,7 +56,8 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Code language</span>
           </div>
-          <select class="custom-select" [(ngModel)]="pasteText.language" [ngModelOptions]="{standalone: true}" (change)="onChangeLanguage(langs.value)" #langs>
+          <select class="custom-select" [(ngModel)]="pasteText.language" [ngModelOptions]="{standalone: true}"
+                  (change)="onChangeLanguage(langs.value)" #langs>
             <option *ngFor="let language of languages" [value]="language.id">{{language.name}}</option>
           </select>
         </div>
@@ -35,6 +71,6 @@
               [class]="textInput.hasError('required') && textInput.dirty ? 'username-invalid form-control text-input':'form-control text-input'"
               formControlName="textInput"
     ></textarea>
-    <button [disabled]="formdata.invalid" type="submit" class="btn btn-success paste-code-btn">Paste code</button>
+    <button [disabled]="formdata.invalid" type="submit" class="btn btn-success mb-3 paste-code-btn">Paste code</button>
   </div>
 </form>
