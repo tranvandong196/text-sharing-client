@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+
 import { PasteTextService } from '../../services/paste-text.service';
 import { PasteText } from '../../models/paste-text.model';
 
