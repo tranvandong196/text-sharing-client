@@ -25,8 +25,8 @@ export class PasteTextService {
 
   constructor(private http: HttpClient) { }
 
-  getPasteText(hash: string = ''): Observable<PasteText> {
-    return this.http.get<PasteText>(this.pasteTextUrl + '/' + hash)
+  getPasteText(hash: string = ''): Observable<PasteText[]> {
+    return this.http.get<PasteText[]>(this.pasteTextUrl + '/' + hash)
       .pipe(
         tap(pasteText => console.log('fetched pasteText')),
         catchError(this.handleError('pasteText', []))

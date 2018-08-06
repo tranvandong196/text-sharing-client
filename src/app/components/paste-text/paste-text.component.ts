@@ -13,7 +13,7 @@ import { PasteText } from '../../models/paste-text.model';
 export class PasteTextComponent implements OnInit {
 
   public languages;
-  public pasteText: PasteText;
+  public pasteText;
   public pasteTextUrl;
 
   public username;
